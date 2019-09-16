@@ -63,19 +63,12 @@ namespace Contacts.Data
 
 
         public Contact Update(Contact contact)
-        {
-           
+        {  
             var oldContact = this.GetContact(contact.ContactId);
             oldContact.Name = contact.Name;
             oldContact.Address = contact.Address;
             oldContact.Email = contact.Email;
             context.Update(oldContact);
-
-            // Set manually detached to prevent tracking error
-            //foreach (var phone in contact.Phones)
-            //{
-            //    context.Entry(phone).State = EntityState.Detached;
-            //}
 
             // Add or Update phones
             foreach (var phone in contact.Phones)
@@ -114,3 +107,10 @@ namespace Contacts.Data
     }
 }
 
+
+
+// Set manually detached to prevent tracking error
+//foreach (var phone in contact.Phones)
+//{
+//    context.Entry(phone).State = EntityState.Detached;
+//}
