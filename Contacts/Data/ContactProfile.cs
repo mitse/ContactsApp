@@ -7,31 +7,33 @@ using System.Threading.Tasks;
 
 namespace Contacts.Data
 {
-    public class ContactProfile: Profile
+    public class ContactProfile : Profile
     {
         public ContactProfile()
         {
             this.CreateMap<Contact, ContactModel>()
-                .ReverseMap();
-                //.ForMember(t => t.Phones, opt => opt.MapFrom(src => src.Phones));
+              .ForMember(c => c.Phones, o => o.MapFrom(c => c.Phones))
+              .ReverseMap();
 
             this.CreateMap<Phone, PhoneModel>()
                 .ReverseMap()
                 .ForMember(t => t.Contact, opt => opt.Ignore());
         }
 
-        //private void AddOrUpdateCities(CountryData dto, Country country)
+        //private void AddOrUpdateCities(Contact dto, ContactModel contact)
         //{
-        //    foreach (var cityDTO in dto.Cities)
+        //    foreach (var phoneDTO in dto.Phones)
         //    {
-        //        if (cityDTO.Id == 0)
+        //        if (phoneDTO.PhoneId == 0)
         //        {
-        //            country.Cities.Add(Mapper.Map<City>(cityDTO));
+        //            contact.Phones.Add(Mapper.Map<PhoneModel>(phoneDTO));
         //        }
         //        else
         //        {
-        //            Mapper.Map(cityDTO, country.Cities.SingleOrDefault(c => c.Id == cityDTO.Id));
+
+        //            AutoMapper.Mapper.Map(phoneDTO, contact.Phones.SingleOrDefault(p => p.PhoneId == phoneDTO.PhoneId));
         //        }
         //    }
-        }
+        //}
     }
+}

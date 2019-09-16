@@ -34,6 +34,7 @@ namespace Contacts
             services.AddScoped<IContactRepository, ContactRepository>();
             services.AddAutoMapper(typeof(Startup));
 
+            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -51,6 +52,11 @@ namespace Contacts
             }
 
             app.UseHttpsRedirection();
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
             app.UseMvc();
         }
     }

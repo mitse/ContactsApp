@@ -42,7 +42,9 @@ namespace Contacts.Data
 
         public Contact GetContact(int id)
         {
-            var contact = context.Contacts.Find(id); 
+            var contact = context.Contacts
+                .Include(c => c.Phones)
+                .FirstOrDefault(c => c.ContactId == id); 
       
             if (contact != null)
             {
@@ -67,12 +69,15 @@ namespace Contacts.Data
             oldContact.Name = contact.Name;
             oldContact.Address = contact.Address;
             oldContact.Email = contact.Email;
-            
+            context.Update(oldContact);
+
+            // Set manually detached to prevent tracking error
             foreach (var phone in contact.Phones)
             {
                 context.Entry(phone).State = EntityState.Detached;
             }
 
+            // Add or Update phones
             foreach (var phone in contact.Phones)
             {
                 var oldPhone = context.Phones
@@ -81,10 +86,24 @@ namespace Contacts.Data
                 {
                     oldPhone.Type = phone.Type;
                     oldPhone.Number = phone.Number;
+                    context.Update(oldPhone);
+                } else
+                {
+                    phone.Contact = contact;
+                    context.Add(phone);
                 }
-                context.Update(oldPhone);
             }
-            context.Update(oldContact);
+
+            // Delete phones
+            foreach (var phone in oldContact.Phones)
+            {
+                var exist = contact.Phones.Any(p => p.PhoneId == phone.PhoneId);
+                if (!exist)
+                {
+                    context.Remove(phone);
+                }
+            }
+                
 
             if (context.SaveChanges() > 0)
             {
@@ -94,3 +113,11 @@ namespace Contacts.Data
         }
     }
 }
+
+
+
+            //foreach (var phone in contact.Phones)
+            //{
+            //    context.Phones.Attach(phone);
+            //    context.Entry(phone).State = EntityState.Modified;
+            //}

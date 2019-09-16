@@ -72,12 +72,6 @@ namespace Contacts.Controllers
                 var oldContact = repository.GetContact(id);
                 if (oldContact == null) return NotFound($"Could not find contact");
 
-                //var updated = mapper.Map(model, oldContact);
-                //if(repository.SaveChanges())
-                //{
-                //    return mapper.Map<ContactModel>(updated);
-                //}
-
                 var updated =  repository.Update(mapper.Map<Contact>(model));
                 return mapper.Map<ContactModel>(updated);
 
