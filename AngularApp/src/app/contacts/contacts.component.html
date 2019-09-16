@@ -1,0 +1,11 @@
+
+
+<button mat-icon-button
+    (click)="addContact()">
+    <mat-icon class="add-icon">add</mat-icon>
+</button>
+
+<div *ngFor="let contact of contacts">
+  <app-contact-details [contact]="contact"></app-contact-details>
+</div>
+

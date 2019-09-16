@@ -1,0 +1,93 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    Add Contact
+  </mat-toolbar-row>
+</mat-toolbar>
+<form #form [formGroup]="newContactForm">
+  <div class="contact-form">
+    <!--name-->
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="Fill contact name" formControlName="name">
+      <mat-icon matSuffix color="accent">person</mat-icon>
+      <mat-error *ngIf="nameFormControl.touched && nameFormControl.hasError('required')">
+        Name is required
+      </mat-error>
+      <mat-error *ngIf="nameFormControl.touched && nameFormControl.hasError('maxlength')">
+        The name is too long!
+      </mat-error>
+    </mat-form-field>
+
+    <!--email-->
+    <mat-form-field>
+      <mat-label>E-mail</mat-label>
+      <input matInput type="email" placeholder="user@example.com" formControlName="email">
+      <mat-icon matSuffix color="accent">email</mat-icon>
+      <mat-error *ngIf="emailFormControl.touched && emailFormControl.hasError('required')">
+        E-mail is required
+      </mat-error>
+      <mat-error *ngIf="emailFormControl.touched && emailFormControl.hasError('email')">
+        Please enter a valid e-mail address
+      </mat-error>
+    </mat-form-field>
+
+    <!--address-->
+    <mat-form-field>
+      <mat-label>Address</mat-label>
+      <input matInput type="address" placeholder="Fill address" formControlName="address">
+      <mat-icon matSuffix color="accent">home</mat-icon>
+      <mat-error *ngIf="addressFormControl.touched && addressFormControl.hasError('maxlength')">
+        Address is too long!
+      </mat-error>
+    </mat-form-field>
+
+    <!--phone numbers-->
+    <!-- <mat-form-field >
+      <input matInput
+             type="number"
+             placeholder="e.g: +49-12345678"
+             [formControl]="phoneNumberFormControl">
+      <mat-icon matSuffix color="accent">phone</mat-icon>
+      <mat-hint align="end" aria-live="polite">
+        The phone number is international. Therefore, it should start with a + sign,
+        followed by the country code and national number
+      </mat-hint>
+      <mat-error *ngIf="phoneNumberFormControl.hasError('pattern')">
+        Please enter a valid phone number
+      </mat-error>
+    </mat-form-field> -->
+
+    <div formArrayName="phones">
+      <span (click)="addPhone()">Add new phone</span>
+      <div *ngFor="let phone of phonesFormArray.controls; let i = index;">
+        <div [formGroupName]="i" class="phone-group">
+          <mat-form-field>
+            <mat-label>Phone</mat-label>
+            <input matInput type="number" placeholder="e.g 6977777777" formControlName="number">
+            <mat-icon matSuffix color="accent">phone</mat-icon>
+            <mat-error *ngIf="phone.touched && phone.hasError('pattern')">
+              Please enter a valid phone number
+            </mat-error>
+          </mat-form-field>
+          <mat-radio-group formControlName="type" class="radio-group">
+            <mat-radio-button value="mobile">Mobile</mat-radio-button>
+            <mat-radio-button value="fixed">Fixed</mat-radio-button>
+          </mat-radio-group>
+          <mat-icon class="remove-icon" (click)="removePhoneFromArray(i)" matSuffix color="primary">delete</mat-icon>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="add-contact-buttons">
+      <button mat-raised-button class="save-button" color="accent"
+          (click)="onSubmit()"
+          [disabled]="newContactForm.invalid">
+        Save
+      </button>
+      <button mat-button color="warn" (click)="clearContact($event)">
+        Clear
+      </button>
+    </div>
+  </div>
+</form>

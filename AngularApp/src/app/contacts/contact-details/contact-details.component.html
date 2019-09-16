@@ -1,0 +1,24 @@
+
+<mat-card class="example-card">
+    <mat-card-header>
+      <!-- <mat-icon>more_vert</mat-icon> -->
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title class="flex-center">
+        <mat-icon matSuffix color="accent">person</mat-icon>
+        <span>{{contact.name}}</span>
+      </mat-card-title>
+      <mat-card-subtitle class="flex-center">
+        <mat-icon matSuffix color="accent">email</mat-icon>
+        {{contact.email}}
+      </mat-card-subtitle>
+      <mat-card-subtitle class="flex-center" *ngIf="contact.address">
+        <mat-icon matSuffix color="accent">home</mat-icon>
+        {{contact.address}}
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <p>
+         Phones
+        </p>
+      </mat-card-content>
+</mat-card>

@@ -1,0 +1,32 @@
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+
+  &>.mat-form-field {
+    margin-bottom: 10px;
+  }
+
+  .add-contact-buttons{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .phone-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .remove-icon{
+    cursor: pointer;
+  }
+
+  .radio-group{
+    .mat-radio-button {
+      margin-right: 5px;
+    }
+  }
+}
