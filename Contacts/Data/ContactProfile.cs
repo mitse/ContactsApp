@@ -20,20 +20,5 @@ namespace Contacts.Data
                 .ForMember(t => t.Contact, opt => opt.Ignore());
         }
 
-        //private void AddOrUpdateCities(Contact dto, ContactModel contact)
-        //{
-        //    foreach (var phoneDTO in dto.Phones)
-        //    {
-        //        if (phoneDTO.PhoneId == 0)
-        //        {
-        //            contact.Phones.Add(Mapper.Map<PhoneModel>(phoneDTO));
-        //        }
-        //        else
-        //        {
-
-        //            AutoMapper.Mapper.Map(phoneDTO, contact.Phones.SingleOrDefault(p => p.PhoneId == phoneDTO.PhoneId));
-        //        }
-        //    }
-        //}
     }
 }

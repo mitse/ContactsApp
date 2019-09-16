@@ -80,7 +80,6 @@ namespace Contacts.Controllers
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
             }
-            return BadRequest();
         }
 
         // DELETE api/contacts/5

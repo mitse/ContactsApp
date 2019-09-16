@@ -107,7 +107,7 @@ namespace Contacts.Data
 
             if (context.SaveChanges() > 0)
             {
-                return contact;
+                return oldContact;
             }
             return null;
         }
