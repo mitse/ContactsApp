@@ -1,6 +1,6 @@
-import { AddContactComponent } from '../contacts/add-contact/add-contact.component';
+import { AddEditContactComponent } from '../contacts/add-edit-contact/add-edit-contact.component';
 
 export const components = {
-    'AddContactComponent' : AddContactComponent,
-    'EditContactComponent' : AddContactComponent,
+    'AddContactComponent' : AddEditContactComponent,
+    'EditContactComponent' : AddEditContactComponent,
 }

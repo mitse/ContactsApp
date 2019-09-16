@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { AddContactComponent } from './add-contact/add-contact.component';
+import { AddEditContactComponent } from './add-edit-contact/add-edit-contact.component';
 import { switchMap } from 'rxjs/operators';
 import { ContactService } from '../services/contact.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { IContact } from './interfaces/ContactModel';
+import { ConfirmationDialogComponent } from '../shared/confirmation-dialog/confirmation-dialog.component';
+import { Observable, EMPTY } from 'rxjs';
 
 @Component({
   selector: 'app-contacts',
@@ -15,35 +17,64 @@ export class ContactsComponent implements OnInit {
   currentDialog: MatDialogRef<any> = null;
   contacts: IContact[];
   constructor(private matDialog: MatDialog,
-     private snackBar: MatSnackBar,
-     private contactService: ContactService) { }
+    private snackBar: MatSnackBar,
+    private contactService: ContactService) { }
 
   ngOnInit() {
     this.getContacts();
   }
 
   private getContacts() {
-     this.contactService.getContacts().subscribe(res => this.contacts = res);
+    this.contactService.getContacts().subscribe(res => this.contacts = res);
   }
 
   addContact() {
-    const dialogData = null;
-    this.currentDialog = this.matDialog.open(AddContactComponent, {
+    this.currentDialog = this.matDialog.open(AddEditContactComponent, {
       panelClass: 'add-contact-dialog',
-      data: dialogData
-     });
+      data: null
+    });
     this.currentDialog.componentInstance.onAddContact.pipe(
-      switchMap(res => {
-        return this.contactService.createContact(res as IContact);
-      })
+      switchMap(res => this.contactService.createContact(res as IContact))
     ).subscribe(data => {
-          console.log(data);
-          this.showMessage('User Created');
-          this.currentDialog.close();
+      const newContact = { ...data };
+      this.contacts = [newContact,...this.contacts];
+      this.showMessage('User Created');
+      this.currentDialog.close();
     })
+  }
 
-    this.currentDialog.afterClosed().subscribe(res => {
-     console.log(res)
+  editContant(contact: IContact) {
+    this.currentDialog = this.matDialog.open(AddEditContactComponent, {
+      panelClass: 'add-contact-dialog',
+      data: contact
+    });
+    this.currentDialog.componentInstance.onAddContact
+      .pipe(
+        switchMap(res => this.contactService.updateContact(res as IContact))
+      )
+      .subscribe(data => {
+        console.log(data);
+        const updatedContact = { ...data };
+        this.contacts = this.contacts.map(c => {
+          return c.contactId !== contact.contactId ? c : updatedContact;
+        });
+        this.showMessage('User Updated');
+        this.currentDialog.close();
+      })
+
+  }
+
+  deleteContant(contact: IContact) {
+    this.currentDialog = this.matDialog.open(ConfirmationDialogComponent, {
+      panelClass: 'delete-contact-dialog',
+    });
+    this.currentDialog.afterClosed().pipe(
+      switchMap(res => {
+        return res ? this.contactService.deleteContact(contact.contactId) : EMPTY;
+      })
+    ).subscribe(res => {
+      this.contacts = this.contacts.filter(c => c.contactId !== contact.contactId);
+      this.showMessage('User Deleted');
     });
   }
 

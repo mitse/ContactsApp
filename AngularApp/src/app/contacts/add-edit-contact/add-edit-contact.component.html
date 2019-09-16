@@ -41,22 +41,6 @@
       </mat-error>
     </mat-form-field>
 
-    <!--phone numbers-->
-    <!-- <mat-form-field >
-      <input matInput
-             type="number"
-             placeholder="e.g: +49-12345678"
-             [formControl]="phoneNumberFormControl">
-      <mat-icon matSuffix color="accent">phone</mat-icon>
-      <mat-hint align="end" aria-live="polite">
-        The phone number is international. Therefore, it should start with a + sign,
-        followed by the country code and national number
-      </mat-hint>
-      <mat-error *ngIf="phoneNumberFormControl.hasError('pattern')">
-        Please enter a valid phone number
-      </mat-error>
-    </mat-form-field> -->
-
     <div formArrayName="phones">
       <span (click)="addPhone()">Add new phone</span>
       <div *ngFor="let phone of phonesFormArray.controls; let i = index;">
@@ -78,14 +62,13 @@
       </div>
     </div>
 
-
     <div class="add-contact-buttons">
       <button mat-raised-button class="save-button" color="accent"
           (click)="onSubmit()"
           [disabled]="newContactForm.invalid">
         Save
       </button>
-      <button mat-button color="warn" (click)="clearContact($event)">
+      <button mat-button color="warn" (click)="clearContact()">
         Clear
       </button>
     </div>

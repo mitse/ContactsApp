@@ -1,6 +1,7 @@
 
 export interface IPhone {
-  phoneId: string;
+  phoneId?: string;
   type: string;
   number: string;
 }
+

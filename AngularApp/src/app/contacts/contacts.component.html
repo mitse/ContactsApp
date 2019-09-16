@@ -1,11 +1,13 @@
+  <div class="flex-center">
+    <h1>Add Contact</h1>
+    <button mat-icon-button (click)="addContact()">
+      <mat-icon class="add-icon">add</mat-icon>
+    </button>
+  </div>
 
-
-<button mat-icon-button
-    (click)="addContact()">
-    <mat-icon class="add-icon">add</mat-icon>
-</button>
-
-<div *ngFor="let contact of contacts">
-  <app-contact-details [contact]="contact"></app-contact-details>
-</div>
+  <ng-container *ngFor="let contact of contacts">
+    <app-contact-details [contact]="contact" (onEditContant)="editContant($event)"
+      (onDeleteContant)="deleteContant($event)">
+    </app-contact-details>
+  </ng-container>
 

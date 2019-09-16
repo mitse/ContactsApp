@@ -1,24 +1,31 @@
 
-<mat-card class="example-card">
+<mat-card class="contact-card">
     <mat-card-header>
       <!-- <mat-icon>more_vert</mat-icon> -->
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title class="flex-center">
+      <!-- <div mat-card-avatar class="example-header-image"></div> -->
+      <mat-card-title >
         <mat-icon matSuffix color="accent">person</mat-icon>
         <span>{{contact.name}}</span>
       </mat-card-title>
-      <mat-card-subtitle class="flex-center">
+      <mat-card-subtitle>
         <mat-icon matSuffix color="accent">email</mat-icon>
         {{contact.email}}
       </mat-card-subtitle>
-      <mat-card-subtitle class="flex-center" *ngIf="contact.address">
+      <mat-card-subtitle *ngIf="contact.address">
         <mat-icon matSuffix color="accent">home</mat-icon>
         {{contact.address}}
       </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-        <p>
-         Phones
-        </p>
-      </mat-card-content>
+        <mat-list>
+          <mat-list-item *ngFor="let phone of contact.phones">
+              <mat-icon matSuffix color="accent">phone</mat-icon>
+              <span>{{phone.number}}</span>
+            </mat-list-item>
+        </mat-list>
+        <div class="mat-card-actions flex-center">
+            <mat-icon (click)="editContant()" class="edit-icon" matSuffix color="primary">edit</mat-icon>
+            <mat-icon (click)="deleteContant()" class="remove-icon" matSuffix color="primary">delete</mat-icon>
+        </div>
+    </mat-card-content>
 </mat-card>

@@ -72,10 +72,10 @@ namespace Contacts.Data
             context.Update(oldContact);
 
             // Set manually detached to prevent tracking error
-            foreach (var phone in contact.Phones)
-            {
-                context.Entry(phone).State = EntityState.Detached;
-            }
+            //foreach (var phone in contact.Phones)
+            //{
+            //    context.Entry(phone).State = EntityState.Detached;
+            //}
 
             // Add or Update phones
             foreach (var phone in contact.Phones)
@@ -114,10 +114,3 @@ namespace Contacts.Data
     }
 }
 
-
-
-            //foreach (var phone in contact.Phones)
-            //{
-            //    context.Phones.Attach(phone);
-            //    context.Entry(phone).State = EntityState.Modified;
-            //}

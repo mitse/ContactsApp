@@ -13,6 +13,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @NgModule({
  exports: [
@@ -29,7 +30,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
   MatCardModule,
   MatIconModule,
   MatRadioModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatGridListModule
  ],
  declarations: []
 })
